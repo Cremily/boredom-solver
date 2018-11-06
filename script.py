@@ -2,7 +2,9 @@
 
 import os
 import random
-files = os.listdir()
+import sys
+base_path = (sys.path[0])
+files = os.listdir(base_path)
 text = {}
 number = 1
 for file in files:
@@ -46,9 +48,10 @@ def select_options():
 choices = select_options()
 type_answers = {}
 global_answers = []
+print(choices)
 for choice in choices:
     f = False
-    choice = choice.capitalize()
+    choice = base_path + (r'\%s' % (choice))
     type_answers.update({choice:[]})
     choice_path = choice 
     try:
@@ -62,11 +65,12 @@ for choice in choices:
             type_answers[choice].append(line)
             global_answers.append(line)
 random_choices = []
+base_length = len(base_path)
 for ans in type_answers:
     num_of_choices = len(type_answers[ans])
     seed = random.randrange(0,num_of_choices)
     rand_choice = ([ans,type_answers[ans][seed]])
-    print("Your chosen %s is %s" % (rand_choice[0][:-5].lower(),rand_choice[1]))
+    print("Your chosen %s is %s" % (rand_choice[0][base_length+1:-5].lower(),rand_choice[1]))
     random_choices.append(rand_choice[1])
 def global_choice():
     global global_answers
